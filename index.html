@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Illya's IP Address Location Thing</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding-top: 70px;
+            padding-bottom: 20px;
+        }
+
+        #location {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">Illya's IP Location thing</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Fetch IP from browser way</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="google.html">Google Maps API way</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>IP Address Location</h1>
+        <p>Your IP Address: <span id="ipAddress"></span></p>
+        <p id="location">Fetching location...</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function displayLocation(data) {
+            var locationElement = document.getElementById("location");
+            locationElement.textContent = "Location: " + data.city + ", " + data.region + ", " + data.country;
+        }
+
+        function getIpAddress() {
+            var ipAddressElement = document.getElementById("ipAddress");
+            ipAddressElement.textContent = "Fetching IP Address...";
+
+            fetch("https://api.ipify.org?format=json")
+                .then(response => response.json())
+                .then(data => {
+                    ipAddressElement.textContent = data.ip;
+                    fetchLocation(data.ip);
+                })
+                .catch(error => {
+                    ipAddressElement.textContent = "Error fetching IP Address";
+                    console.log(error);
+                });
+        }
+
+        function fetchLocation(ipAddress) {
+            var apiUrl = "https://ipapi.co/" + ipAddress + "/json/";
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    displayLocation(data);
+                })
+                .catch(error => {
+                    var locationElement = document.getElementById("location");
+                    locationElement.textContent = "Error fetching location";
+                    console.log(error);
+                });
+        }
+
+        getIpAddress();
+    </script>
+</body>
+</html>

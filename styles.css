@@ -1,0 +1,37 @@
+/* Custom styles for the website */
+
+/* Adjust padding and margin */
+body {
+    padding-top: 70px;
+    padding-bottom: 20px;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+/* Override Bootstrap styles for specific elements */
+#address {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* Adjust font size for better mobile readability */
+h1 {
+    font-size: 24px;
+}
+
+p {
+    font-size: 16px;
+}
+
+/* Media query for small screens */
+@media (max-width: 576px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+}
